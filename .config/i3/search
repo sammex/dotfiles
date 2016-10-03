@@ -1,0 +1,20 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use 5.12.0;
+use IPC::Open2;
+
+my $se = `echo "" | dmenu -nb '#0d1f22' -nf '#f3f4f5' -sb '#e53935' -sf '#f3f4f5'`;
+chomp $se;
+my $re = `ag --nocolor --silent --ignore-case -g "$se" /home/julius`;
+# $re =~ s/^(.*):[0-9]+$/$1/mg;
+my($dout, $din);
+my $pid = open2($dout, $din, "dmenu -l 15 -nb '#0d1f22' -nf '#f3f4f5' -sb '#e53935' -sf '#f3f4f5'");
+print $din $re;
+close $din;
+my $fres = <$dout>;
+waitpid($pid, 0);
+if (!$fres) {
+exit 0;
+}
+system("thunar $fres &");

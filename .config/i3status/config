@@ -1,0 +1,46 @@
+general {
+  colors = true
+  interval = 5
+  output_format = "none"
+  separator = " "
+}
+
+order += "battery 0"
+order += "volume master"
+order += "load"
+order += "disk /home"
+order += "disk /"
+order += "time"
+
+battery 0 {
+  status_bat = ""
+  status_chr = ""
+  status_full = ""
+  format = "%status %percentage"
+  integer_battery_capacity = true
+  threshold_type = percentage
+  low_threshold = 15
+}
+
+time {
+  format = " %d.%m.%Y %H:%M"
+}
+
+load {
+  format = " %1min"
+}
+
+disk "/" {
+  format = " %free"
+}
+
+disk "/home" {
+  format = " %free"
+}
+
+volume master {
+  format = " %volume"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}

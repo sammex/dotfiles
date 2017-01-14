@@ -1,13 +1,11 @@
 general {
-  colors = true
-  interval = 5
+  interval = 2
   output_format = "none"
   separator = " "
 }
 
 order += "battery 0"
 order += "volume master"
-order += "load"
 order += "disk /home"
 order += "disk /"
 order += "time"
@@ -24,10 +22,6 @@ battery 0 {
 
 time {
   format = " %d.%m.%Y %H:%M"
-}
-
-load {
-  format = " %1min"
 }
 
 disk "/" {

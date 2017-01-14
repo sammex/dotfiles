@@ -11,26 +11,49 @@
 
 set $mod Mod4
 exec --no-startup-id ~/.config/i3/autostart.sh
-for_window [class="^st-256color" title="^scratchpad"] border 1pixel; move scratchpad
+for_window [class="^st-256color" title="^scratchpad"] move scratchpad
+
+set $mode_p POWEROFF
+mode $mode_p {
+bindcode 24 exec --no-startup-id shutdown -h now
+bindsym Return mode "default"
+bindsym Escape mode "default"
+}
+bindcode $mod+Shift+33 mode $mode_p
+
+set $mode_launchpad "Firefox/Thunderbird/Dthunar/Spotify/Evince" 
+mode $mode_launchpad {
+bindcode 41 exec --no-startup-id firefox; mode "default"
+bindcode 28 exec --no-startup-id thunderbird; mode "default"
+bindcode 40 exec --no-startup-id thunar; mode "default"
+bindcode 39 exec --no-startup-id spotify; mode "default"
+bindcode 26 exec --no-startup-id evince; mode "default"
+bindsym Escape mode "default"
+bindsym Return mode "default"
+}
+bindcode $mod+Shift+39 mode $mode_launchpad
 
 # colours! border backgr. text indicator child_border
-set $bg-color 	         #0d1f22
-set $inactive-bg-color   #324c51
-set $text-color          #f3f4f5
-set $inactive-text-color #c2d3d6
-set $urgent-bg-color     #E53935
-set $indicator-color     #2f6872
+#set $bg-color              #0d1f22
+#set $inactive-bg-color   #324c51
+#set $text-color          #f3f4f5
+#set $inactive-text-color #c2d3d6
+#set $urgent-bg-color     #E53935
+#set $indicator-color     #2f6872
 # border background text indicator child_border
-client.focused          $bg-color        $bg-color          $text-color          $indicator-color
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $indicator-color
+#client.focused          $bg-color        $bg-color          $text-color          $indicator-color
+#client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
+#client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
+#client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $indicator-color
 
 # language switching
 bindcode $mod+38 exec --no-startup-id "setxkbmap de ; echo 'DE' > ~/.config/i3status/keyboardlayout"
 bindcode $mod+39 exec --no-startup-id "setxkbmap se ; echo 'SE' > ~/.config/i3status/keyboardlayout"
 bindcode $mod+52 exec --no-startup-id "setxkbmap us ; echo 'US' > ~/.config/i3status/keyboardlayout"
 bindcode $mod+53 exec --no-startup-id "setxkbmap ru ; echo 'RU' > ~/.config/i3status/keyboardlayout"
+
+# default session startup
+#bindcode $mod+42 exec --no-startup-id i3-msg 'workspace 3:; exec spotify; workspace 4:; exec thunar; workspace 5:; exec google-chrome; workspace 6:; exec evince; workspace 1:'
 
 # audio playback
 bindcode 122 exec --no-startup-id "amixer sset Master 5%-"
@@ -128,43 +151,54 @@ bindsym $mod+d focus mode_toggle
 # focus the child container
 #bindsym $mod+d focus child
 
+set $w1 "1"
+set $w2 "2"
+set $w3 "3"
+set $w4 "4"
+set $w5 "5"
+set $w6 "6"
+set $w7 "7"
+set $w8 "8"
+set $w9 "9"
+set $w10 "10"
+
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace $w1
+bindsym $mod+2 workspace $w2
+bindsym $mod+3 workspace $w3
+bindsym $mod+4 workspace $w4
+bindsym $mod+5 workspace $w5
+bindsym $mod+6 workspace $w6
+bindsym $mod+7 workspace $w7
+bindsym $mod+8 workspace $w8
+bindsym $mod+9 workspace $w9
+bindsym $mod+0 workspace $w10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace $w1
+bindsym $mod+Shift+2 move container to workspace $w2
+bindsym $mod+Shift+3 move container to workspace $w3
+bindsym $mod+Shift+4 move container to workspace $w4
+bindsym $mod+Shift+5 move container to workspace $w5
+bindsym $mod+Shift+6 move container to workspace $w6
+bindsym $mod+Shift+7 move container to workspace $w7
+bindsym $mod+Shift+8 move container to workspace $w8
+bindsym $mod+Shift+9 move container to workspace $w9
+bindsym $mod+Shift+0 move container to workspace $w10
 
 # assign workspaces to specific outputs
-workspace 1 output LVDS1
-workspace 2 output LVDS1
-workspace 3 output LVDS1
-workspace 4 output LVDS1
-workspace 5 output DP1
-workspace 6 output DP1
-workspace 7 output DP1
-workspace 8 output DP1
+workspace $w1 output LVDS1
+workspace $w2 output LVDS1
+workspace $w3 output LVDS1
+workspace $w4 output LVDS1
+workspace $w5 output DP1
+workspace $w6 output DP1
+workspace $w7 output DP1
+workspace $w8 output DP1
 
 # active or deactive second monitor
 bindcode $mod+32 exec --no-startup-id xrandr --output DP1 --off
-bindcode $mod+33 exec --no-startup-id xrandr --output DP1 --auto --right-of LVDS1 --rotate left
+bindcode $mod+33 exec --no-startup-id xrandr --output DP1 --auto --right-of LVDS1
 
 # show scratchpad / move window to scratchpad
 bindcode $mod+57 move scratchpad
@@ -179,26 +213,26 @@ bindcode $mod+Shift+26 exec "i3-nagbar -t warning -m 'You pressed the exit short
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+    # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindcode 44 resize shrink width 10 px or 10 ppt
-        bindcode 45 resize grow height 10 px or 10 ppt
-        bindcode 46 resize shrink height 10 px or 10 ppt
-        bindcode 47 resize grow width 10 px or 10 ppt
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindcode 44 resize shrink width 10 px or 10 ppt
+    bindcode 45 resize grow height 10 px or 10 ppt
+    bindcode 46 resize shrink height 10 px or 10 ppt
+    bindcode 47 resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 bindcode $mod+27 mode "resize"
@@ -207,16 +241,16 @@ bindcode $mod+27 mode "resize"
 # finds out, if available)
 bar {
         status_command ~/.config/i3status/mystatus.sh
-	tray_output LVDS1
-	position top
+    tray_output LVDS1
+    position top
 
-	colors {
-		background #000000
-	    	separator #757575
-		#border background text
-                focused_workspace $bg-color $bg-color $text-color
-         	inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		active_workspace $bg-color $bg-color $text-color
-                urgent_workspace $urgent-bg-color $urgent-bg-color $text-color
-        }
-}
+#    colors {
+#        background #000000
+#        separator #757575
+#        #border background text
+#        focused_workspace $bg-color $bg-color $text-color
+#        inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+#        active_workspace $bg-color $bg-color $text-color
+#        urgent_workspace $urgent-bg-color $urgent-bg-color $text-color
+#    }
+
